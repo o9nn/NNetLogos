@@ -1,0 +1,40 @@
+NNetBasicTests
+  extensions [nnet]
+  O> let layer1 nnet:create-layer 2 3 "relu"
+  layer1 => 0
+  O> let layer2 nnet:create-layer 3 2 "sigmoid"
+  layer2 => 1
+  O> let network nnet:create-network (list layer1 layer2)
+  network => 0
+  O> let output nnet:forward network [0.5 0.8]
+  length output => 2
+
+NNetActivationFunctions
+  extensions [nnet]
+  O> nnet:relu 5 => 5
+  O> nnet:relu -5 => 0
+  O> nnet:relu [1 -2 3] => [1 0 3]
+  O> nnet:sigmoid 0 => 0.5
+  O> nnet:tanh 0 => 0.0
+
+NNetTensorOperations
+  extensions [nnet]
+  O> nnet:tensor-add [1 2 3] [4 5 6] => [5 7 9]
+  O> nnet:tensor-transpose [[1 2] [3 4]] => [[1 3] [2 4]]
+  O> length nnet:tensor-multiply [[1 2] [3 4]] [[5 6] [7 8]] => 2
+
+NNetSymbolicReasoning
+  extensions [nnet]
+  O> nnet:symbolic-reasoning [1 5 3 9 2] "max" => 9
+  O> nnet:symbolic-reasoning [1 5 3 9 2] "min" => 1
+  O> nnet:symbolic-reasoning [2 4 6] "avg" => 4.0
+
+NNetCognitiveState
+  extensions [nnet]
+  O> let state nnet:cognitive-state [0.1 0.2 0.3 0.4 0.5 0.6]
+  length state => 5
+
+NNetSoftmax
+  extensions [nnet]
+  O> let probs nnet:softmax [1 2 3]
+  abs ((item 0 probs) + (item 1 probs) + (item 2 probs) - 1.0) < 0.001 => true

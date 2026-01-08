@@ -1,0 +1,13 @@
+target/
+project/target/
+project/project/
+*.jar
+*.class
+*.log
+.bsp/
+.metals/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
